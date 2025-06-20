@@ -8,37 +8,25 @@
 
     <ItemGroup>
         <PackageReference Include="Humanizer" Version="2.14.1" />
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.6"/>
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.6" />
         <PackageReference Include="EntityFrameworkCore.CreatedUpdatedDate" Version="8.0.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.6" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.6" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational.Design" Version="1.1.6" />
-        <PackageReference Include="MySql.EntityFrameworkCore" Version="9.0.3" />
-        <PackageReference Include="Swashbukle.AspNetCore" Version="2.0.0" />
-        <PackageReference Include="Swashbukle.AspNetCore.Newtonsoft" Version="2.0.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.6" />
+        <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="9.0.0-preview.2.efcore.9.0.0" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.0" />
+        <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="9.0.1" />
+        
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Shared\Application\" />
-      <Folder Include="Shared\Domain\Repository\" />
-      <Folder Include="Shared\Infrastructure\Persistence\EFC\Configuration\Repositories\" />
-      <Folder Include="Veterinary\Appointments\Application\Services\" />
-      <Folder Include="Veterinary\Appointments\Domian\Model\Aggregate\" />
-      <Folder Include="Veterinary\Appointments\Infrastruture\" />
-      <Folder Include="Veterinary\Appointments\Interfaces\" />
-      <Folder Include="Veterinary\Client&amp;PetManagement\Application\Services\" />
-      <Folder Include="Veterinary\Client&amp;PetManagement\Domian\Model\Aggregate\" />
-      <Folder Include="Veterinary\Client&amp;PetManagement\Infrastruture\" />
-      <Folder Include="Veterinary\Client&amp;PetManagement\Interfaces\" />
-      <Folder Include="Veterinary\IAM\" />
-      <Folder Include="Veterinary\MedicalHistory\Application\Services\" />
-      <Folder Include="Veterinary\MedicalHistory\Domian\Model\Aggregate\" />
-      <Folder Include="Veterinary\MedicalHistory\Infrastruture\" />
-      <Folder Include="Veterinary\MedicalHistory\Interfaces\" />
-      <Folder Include="Veterinary\Status\Application\Services\" />
-      <Folder Include="Veterinary\Status\Domian\Model\Aggregate\" />
-      <Folder Include="Veterinary\Status\Infrastruture\" />
-      <Folder Include="Veterinary\Status\Interfaces\" />
+        <Folder Include="Veterinary\Appointments\Infrastruture\Repositories\" />
+        <Folder Include="Veterinary\Client&amp;PetManagement\Infrastruture\Repositories\" />
+        <Folder Include="Veterinary\ClientAndPetManagement\Interface\DTOs\" />
+        <Folder Include="Veterinary\MedicalHistory\Infrastruture\Repositories\" />
+        <Folder Include="Veterinary\MedicalHistory\Interfaces\" />
+        <Folder Include="Veterinary\Status\Infrastruture\" />
+        <Folder Include="Veterinary\Status\Interfaces\" />
     </ItemGroup>
 
 </Project>
