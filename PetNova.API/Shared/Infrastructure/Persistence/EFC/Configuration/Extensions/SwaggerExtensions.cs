@@ -1,14 +1,13 @@
-﻿using Microsoft.OpenApi.Models;
-using System.Reflection;
-
-namespace PetNova.API.Shared.Infrastructure.Persistence.EFC.Configuration.Extensions;
+﻿using System.Reflection;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 public static class SwaggerExtensions
 {
-    public static IServiceCollection AddSwagger(this IServiceCollection services)
+    public static IServiceCollection AddCustomSwagger(this IServiceCollection services)
     {
-        services.AddEndpointsApiExplorer();
-        services.AddSwaggerGen(c =>
+        // Configuración consolidada
+        return services.AddEndpointsApiExplorer().AddSwaggerGen(c =>
         {
             c.SwaggerDoc("v1", new OpenApiInfo 
             { 
@@ -25,7 +24,10 @@ public static class SwaggerExtensions
                     Name = "MIT License"
                 }
             });
-
+            // Configuración explícita del esquema OpenAPI
+            c.UseOneOfForPolymorphism();
+            c.SelectDiscriminatorNameUsing(baseType => "$type");
+            c.SelectDiscriminatorValueUsing(subType => subType.Name);
             // Configuración de seguridad JWT
             c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
@@ -59,27 +61,24 @@ public static class SwaggerExtensions
                 c.IncludeXmlComments(xmlPath);
             }
 
-            // Habilitar anotaciones de Swagger
             c.EnableAnnotations();
         });
-
-        return services;
     }
 
-    public static IApplicationBuilder UseSwaggerUI(this IApplicationBuilder app)
+    public static IApplicationBuilder UseCustomSwaggerUI(this IApplicationBuilder app)
     {
-        app.UseSwagger();
-        app.UseSwaggerUI(c =>
-        {
-            c.SwaggerEndpoint("/swagger/v1/swagger.json", "PetNova Veterinary API v1");
-            c.RoutePrefix = "swagger";
-            c.DisplayRequestDuration();
-            c.EnableDeepLinking();
-            c.DefaultModelsExpandDepth(-1);
-            c.DisplayOperationId();
-            c.EnableFilter();
-        });
-
-        return app;
+        return app
+            .UseSwagger()
+            .UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "PetNova Veterinary API v1");
+                c.RoutePrefix = "swagger";
+                c.DisplayRequestDuration();
+                c.EnableDeepLinking();
+                c.DefaultModelsExpandDepth(-1);
+                c.DisplayOperationId();
+                c.EnableFilter();
+            });
     }
+
 }

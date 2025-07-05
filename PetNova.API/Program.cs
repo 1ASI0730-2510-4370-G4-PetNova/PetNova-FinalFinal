@@ -3,34 +3,47 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-
+using Microsoft.AspNetCore.Identity;   
 using PetNova.API.Shared.Application.Services;
 using PetNova.API.Shared.Domain.Repository;
 using PetNova.API.Shared.Infrastructure.Persistence.EFC.Configuration;
 using PetNova.API.Shared.Infrastructure.Persistence.EFC.Configuration.Extensions;
 using PetNova.API.Shared.Infrastructure.Persistence.EFC.Configuration.Repositories;
-using PetNova.API.Shared.Infrastructure.Services;
 using PetNova.API.Shared.Infrastructure.Persistence.EFC.Repositories;
 using PetNova.API.Veterinary.ClientAndPetManagement.Application.Services;
 using PetNova.API.Veterinary.Appointments.Application.Services;
 using PetNova.API.Veterinary.IAM.Application.Services;
-using PetNova.API.Veterinary.MedicalHistory.Application.Services;
+using PetNova.API.Veterinary.IAM.Domain.Model.Aggregate;
 using PetNova.API.Veterinary.Status.Application.Services;
+using JwtTokenService = PetNova.API.Shared.Infrastructure.Services.JwtTokenService;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:5173") // 🔁 Aquí va la URL de tu frontend
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+});
 // ───────────────────────────────────────────────
 // 1️⃣  REGISTER SERVICES
 // ───────────────────────────────────────────────
 
 // Domain services (DI)
-//builder.Services.AddScoped<PetService>();
-//builder.Services.AddScoped<AppointmentService>();
+builder.Services.AddScoped<IPetService   , PetService>();
 builder.Services.AddScoped<IClientService, ClientService>();
-//builder.Services.AddScoped<DoctorService>();
-//builder.Services.AddScoped<AuthService>();
-//builder.Services.AddScoped<MedicalRecordService>();
-//builder.Services.AddScoped<StatusService>();
+builder.Services.AddScoped<IDoctorService, DoctorService>();
+builder.Services.AddScoped<IStatusService, StatusService>();  
+builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<IAppointmentService, AppointmentService>();
+
 
 // Generic repository & UoW
 builder.Services.AddScoped(typeof(IRepository<,>), typeof(EfRepository<,>));
@@ -41,20 +54,14 @@ builder.Services.AddScoped<ITokenService, JwtTokenService>();
 
 // Controllers
 builder.Services.AddControllers();
-
-// Swagger
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(opt =>
+builder.Services.AddSwaggerGen(options => 
 {
-    opt.EnableAnnotations();
-    opt.SwaggerDoc("v1", new OpenApiInfo
-    {
-        Title       = "PetNova API",
-        Version     = "v1",
-        Description = "PetNova veterinary management API"
-    });
+    options.UseAllOfToExtendReferenceSchemas();
+    options.UseAllOfForInheritance();
+    options.UseOneOfForPolymorphism();
 });
-
+// Swagger
+//builder.Services.AddEndpointsApiExplorer();
 // ───────────────────────────────────────────────
 // 2️⃣  DATABASE CONTEXT
 // ───────────────────────────────────────────────
@@ -92,25 +99,29 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 builder.Services.AddAuthorization();
+builder.Services.AddCustomSwagger();
 
 // ───────────────────────────────────────────────
 // 4️⃣  BUILD APP
 // ───────────────────────────────────────────────
 var app = builder.Build();
+app.UseCors(MyAllowSpecificOrigins);
 
 // Global exception page in Dev
 if (app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
 
 // Swagger always available
-app.UseSwagger();
-app.UseSwaggerUI();
+// app.UseSwagger();
+// app.UseSwaggerUI();
 
 // HTTPS & routing
 app.UseHttpsRedirection();
+app.UseCors(MyAllowSpecificOrigins); 
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+app.UseCustomSwaggerUI();
 
 // ───────────────────────────────────────────────
 // 5️⃣  MIGRATIONS & SEED
