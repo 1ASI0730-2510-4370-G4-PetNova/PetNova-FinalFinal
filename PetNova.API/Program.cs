@@ -14,7 +14,6 @@ using PetNova.API.Veterinary.ClientAndPetManagement.Application.Services;
 using PetNova.API.Veterinary.Appointments.Application.Services;
 using PetNova.API.Veterinary.IAM.Application.Services;
 using PetNova.API.Veterinary.IAM.Domain.Model.Aggregate;
-using PetNova.API.Veterinary.Status.Application.Services;
 using JwtTokenService = PetNova.API.Shared.Infrastructure.Services.JwtTokenService;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -39,7 +38,6 @@ builder.Services.AddCors(options =>
 builder.Services.AddScoped<IPetService   , PetService>();
 builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<IDoctorService, DoctorService>();
-builder.Services.AddScoped<IStatusService, StatusService>();  
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<IAppointmentService, AppointmentService>();

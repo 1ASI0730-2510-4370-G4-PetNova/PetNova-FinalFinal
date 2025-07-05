@@ -12,13 +12,13 @@ namespace PetNova.API.Veterinary.Appointments.Application.Services;
 
 public sealed class AppointmentService : IAppointmentService
 {
-    private readonly IRepository<Appointment, Guid> _repo;
+    private readonly IRepository<Domain.Model.Aggregate.Appointment, Guid> _repo;
     private readonly IRepository<Pet, Guid>         _pets;
     private readonly IRepository<Doctor, Guid>      _doctors;
     private readonly IUnitOfWork                    _uow;
 
     public AppointmentService(
-        IRepository<Appointment, Guid> repo,
+        IRepository<Domain.Model.Aggregate.Appointment, Guid> repo,
         IRepository<Pet, Guid>         pets,
         IRepository<Doctor, Guid>      doctors,
         IUnitOfWork                    uow)
@@ -30,7 +30,7 @@ public sealed class AppointmentService : IAppointmentService
     }
 
     /* ---------- mapping ---------- */
-    private static AppointmentDTO Map(Appointment a) => new()
+    private static AppointmentDTO Map(Domain.Model.Aggregate.Appointment a) => new()
     {
         Id              = a.Id,
         AppointmentDate = a.AppointmentDate,
@@ -65,7 +65,7 @@ public sealed class AppointmentService : IAppointmentService
         if (!await _pets.Exists(dto.PetId) || !await _doctors.Exists(dto.DoctorId))
             throw new InvalidOperationException("PetId o DoctorId no existen.");
 
-        var a = new Appointment
+        var a = new Domain.Model.Aggregate.Appointment
         {
             AppointmentDate = dto.AppointmentDate,
             Reason          = dto.Reason,
