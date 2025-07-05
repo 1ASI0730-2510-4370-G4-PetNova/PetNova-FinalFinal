@@ -22,175 +22,6 @@ namespace PetNova.API.Migrations
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
 
-            modelBuilder.Entity("PetNova.API.Veterinary.Appointments.Domain.Model.Aggregate.Appointment", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<DateTime>("AppointmentDate")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<Guid>("DoctorId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("Notes")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<Guid>("PetId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("Reason")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DoctorId");
-
-                    b.HasIndex("PetId");
-
-                    b.ToTable("Appointments");
-                });
-
-            modelBuilder.Entity("PetNova.API.Veterinary.ClientAndPetManagement.Domain.Model.Aggregate.Client", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Clients");
-                });
-
-            modelBuilder.Entity("PetNova.API.Veterinary.ClientAndPetManagement.Domain.Model.Aggregate.Doctor", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("LicenseNumber")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Specialization")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Doctors");
-                });
-
-            modelBuilder.Entity("PetNova.API.Veterinary.ClientAndPetManagement.Domain.Model.Aggregate.Pet", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("Breed")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<Guid>("ClientId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("Color")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<DateTime>("DateOfBirth")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Gender")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("MicrochipId")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Species")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClientId");
-
-                    b.ToTable("Pets");
-                });
-
             modelBuilder.Entity("PetNova.API.Veterinary.IAM.Domain.Model.Aggregate.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -224,146 +55,45 @@ namespace PetNova.API.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("PetNova.API.Veterinary.MedicalHistory.Domain.Model.Aggregate.MedicalRecord", b =>
+            modelBuilder.Entity("PetNova.API.Veterinary.Pets.Domain.Model.Aggregate.Pet", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Diagnosis")
+                    b.Property<string>("Breed")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
 
-                    b.Property<Guid>("DoctorId")
+                    b.Property<Guid>("ClientId")
                         .HasColumnType("char(36)");
 
-                    b.Property<string>("Notes")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                    b.Property<DateTimeOffset?>("CreatedDate")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("CreatedAt");
 
-                    b.Property<Guid>("PetId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<DateTime>("RecordDate")
+                    b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("Treatment")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime?>("UpdatedAt")
+                    b.Property<DateTime>("DateRegistered")
                         .HasColumnType("datetime(6)");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("DoctorId");
-
-                    b.HasIndex("PetId");
-
-                    b.ToTable("MedicalRecords");
-                });
-
-            modelBuilder.Entity("PetNova.API.Veterinary.Status.Domain.Model.Aggregate.Status", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("tinyint(1)");
+                    b.Property<int>("Gender")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
 
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime(6)");
+                    b.Property<DateTimeOffset?>("UpdatedDate")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("UpdatedAt");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Statuses");
-                });
-
-            modelBuilder.Entity("PetNova.API.Veterinary.Appointments.Domain.Model.Aggregate.Appointment", b =>
-                {
-                    b.HasOne("PetNova.API.Veterinary.ClientAndPetManagement.Domain.Model.Aggregate.Doctor", "Doctor")
-                        .WithMany("Appointments")
-                        .HasForeignKey("DoctorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PetNova.API.Veterinary.ClientAndPetManagement.Domain.Model.Aggregate.Pet", "Pet")
-                        .WithMany("Appointments")
-                        .HasForeignKey("PetId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Doctor");
-
-                    b.Navigation("Pet");
-                });
-
-            modelBuilder.Entity("PetNova.API.Veterinary.ClientAndPetManagement.Domain.Model.Aggregate.Pet", b =>
-                {
-                    b.HasOne("PetNova.API.Veterinary.ClientAndPetManagement.Domain.Model.Aggregate.Client", "Client")
-                        .WithMany("Pets")
-                        .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Client");
-                });
-
-            modelBuilder.Entity("PetNova.API.Veterinary.MedicalHistory.Domain.Model.Aggregate.MedicalRecord", b =>
-                {
-                    b.HasOne("PetNova.API.Veterinary.ClientAndPetManagement.Domain.Model.Aggregate.Doctor", "Doctor")
-                        .WithMany("MedicalRecords")
-                        .HasForeignKey("DoctorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PetNova.API.Veterinary.ClientAndPetManagement.Domain.Model.Aggregate.Pet", "Pet")
-                        .WithMany("MedicalRecords")
-                        .HasForeignKey("PetId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Doctor");
-
-                    b.Navigation("Pet");
-                });
-
-            modelBuilder.Entity("PetNova.API.Veterinary.ClientAndPetManagement.Domain.Model.Aggregate.Client", b =>
-                {
-                    b.Navigation("Pets");
-                });
-
-            modelBuilder.Entity("PetNova.API.Veterinary.ClientAndPetManagement.Domain.Model.Aggregate.Doctor", b =>
-                {
-                    b.Navigation("Appointments");
-
-                    b.Navigation("MedicalRecords");
-                });
-
-            modelBuilder.Entity("PetNova.API.Veterinary.ClientAndPetManagement.Domain.Model.Aggregate.Pet", b =>
-                {
-                    b.Navigation("Appointments");
-
-                    b.Navigation("MedicalRecords");
+                    b.ToTable("Pets");
                 });
 #pragma warning restore 612, 618
         }

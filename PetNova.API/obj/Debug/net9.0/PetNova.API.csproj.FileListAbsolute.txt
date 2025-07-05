@@ -191,18 +191,6 @@ C:\Users\usuario\Downloads\LUC\Final Final\Pet-Nova\Pet-Nova\PetNova.API\obj\Deb
 C:\Users\usuario\Downloads\LUC\Final Final\Pet-Nova\Pet-Nova\PetNova.API\obj\Debug\net9.0\PetNova.API.pdb
 C:\Users\usuario\Downloads\LUC\Final Final\Pet-Nova\Pet-Nova\PetNova.API\obj\Debug\net9.0\PetNova.API.genruntimeconfig.cache
 C:\Users\usuario\Downloads\LUC\Final Final\Pet-Nova\Pet-Nova\PetNova.API\obj\Debug\net9.0\ref\PetNova.API.dll
-C:\Users\usuario\RiderProjects\PetNova-FinalFinal\PetNova.API\obj\Debug\net9.0\PetNova.API.csproj.AssemblyReference.cache
-C:\Users\usuario\RiderProjects\PetNova-FinalFinal\PetNova.API\obj\Debug\net9.0\rpswa.dswa.cache.json
-C:\Users\usuario\RiderProjects\PetNova-FinalFinal\PetNova.API\obj\Debug\net9.0\PetNova.API.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\usuario\RiderProjects\PetNova-FinalFinal\PetNova.API\obj\Debug\net9.0\PetNova.API.AssemblyInfoInputs.cache
-C:\Users\usuario\RiderProjects\PetNova-FinalFinal\PetNova.API\obj\Debug\net9.0\PetNova.API.AssemblyInfo.cs
-C:\Users\usuario\RiderProjects\PetNova-FinalFinal\PetNova.API\obj\Debug\net9.0\PetNova.API.csproj.CoreCompileInputs.cache
-C:\Users\usuario\RiderProjects\PetNova-FinalFinal\PetNova.API\obj\Debug\net9.0\PetNova.API.MvcApplicationPartsAssemblyInfo.cs
-C:\Users\usuario\RiderProjects\PetNova-FinalFinal\PetNova.API\obj\Debug\net9.0\PetNova.API.MvcApplicationPartsAssemblyInfo.cache
-C:\Users\usuario\RiderProjects\PetNova-FinalFinal\PetNova.API\obj\Debug\net9.0\PetNova.API.sourcelink.json
-C:\Users\usuario\RiderProjects\PetNova-FinalFinal\PetNova.API\obj\Debug\net9.0\PetNova.API.dll
-C:\Users\usuario\RiderProjects\PetNova-FinalFinal\PetNova.API\obj\Debug\net9.0\refint\PetNova.API.dll
-C:\Users\usuario\RiderProjects\PetNova-FinalFinal\PetNova.API\obj\Debug\net9.0\PetNova.API.pdb
 C:\Users\usuario\RiderProjects\PetNova-FinalFinal\PetNova.API\bin\Debug\net9.0\appsettings.Development.json
 C:\Users\usuario\RiderProjects\PetNova-FinalFinal\PetNova.API\bin\Debug\net9.0\appsettings.json
 C:\Users\usuario\RiderProjects\PetNova-FinalFinal\PetNova.API\bin\Debug\net9.0\PetNova.API.staticwebassets.endpoints.json
@@ -373,6 +361,15 @@ C:\Users\usuario\RiderProjects\PetNova-FinalFinal\PetNova.API\bin\Debug\net9.0\r
 C:\Users\usuario\RiderProjects\PetNova-FinalFinal\PetNova.API\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
 C:\Users\usuario\RiderProjects\PetNova-FinalFinal\PetNova.API\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
 C:\Users\usuario\RiderProjects\PetNova-FinalFinal\PetNova.API\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\usuario\RiderProjects\PetNova-FinalFinal\PetNova.API\obj\Debug\net9.0\PetNova.API.csproj.AssemblyReference.cache
+C:\Users\usuario\RiderProjects\PetNova-FinalFinal\PetNova.API\obj\Debug\net9.0\rpswa.dswa.cache.json
+C:\Users\usuario\RiderProjects\PetNova-FinalFinal\PetNova.API\obj\Debug\net9.0\PetNova.API.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\usuario\RiderProjects\PetNova-FinalFinal\PetNova.API\obj\Debug\net9.0\PetNova.API.AssemblyInfoInputs.cache
+C:\Users\usuario\RiderProjects\PetNova-FinalFinal\PetNova.API\obj\Debug\net9.0\PetNova.API.AssemblyInfo.cs
+C:\Users\usuario\RiderProjects\PetNova-FinalFinal\PetNova.API\obj\Debug\net9.0\PetNova.API.csproj.CoreCompileInputs.cache
+C:\Users\usuario\RiderProjects\PetNova-FinalFinal\PetNova.API\obj\Debug\net9.0\PetNova.API.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\usuario\RiderProjects\PetNova-FinalFinal\PetNova.API\obj\Debug\net9.0\PetNova.API.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\usuario\RiderProjects\PetNova-FinalFinal\PetNova.API\obj\Debug\net9.0\PetNova.API.sourcelink.json
 C:\Users\usuario\RiderProjects\PetNova-FinalFinal\PetNova.API\obj\Debug\net9.0\rjimswa.dswa.cache.json
 C:\Users\usuario\RiderProjects\PetNova-FinalFinal\PetNova.API\obj\Debug\net9.0\rjsmrazor.dswa.cache.json
 C:\Users\usuario\RiderProjects\PetNova-FinalFinal\PetNova.API\obj\Debug\net9.0\rjsmcshtml.dswa.cache.json
@@ -382,5 +379,8 @@ C:\Users\usuario\RiderProjects\PetNova-FinalFinal\PetNova.API\obj\Debug\net9.0\s
 C:\Users\usuario\RiderProjects\PetNova-FinalFinal\PetNova.API\obj\Debug\net9.0\staticwebassets.development.json
 C:\Users\usuario\RiderProjects\PetNova-FinalFinal\PetNova.API\obj\Debug\net9.0\staticwebassets.build.endpoints.json
 C:\Users\usuario\RiderProjects\PetNova-FinalFinal\PetNova.API\obj\Debug\net9.0\PetNova..82C905AF.Up2Date
+C:\Users\usuario\RiderProjects\PetNova-FinalFinal\PetNova.API\obj\Debug\net9.0\PetNova.API.dll
+C:\Users\usuario\RiderProjects\PetNova-FinalFinal\PetNova.API\obj\Debug\net9.0\refint\PetNova.API.dll
+C:\Users\usuario\RiderProjects\PetNova-FinalFinal\PetNova.API\obj\Debug\net9.0\PetNova.API.pdb
 C:\Users\usuario\RiderProjects\PetNova-FinalFinal\PetNova.API\obj\Debug\net9.0\PetNova.API.genruntimeconfig.cache
 C:\Users\usuario\RiderProjects\PetNova-FinalFinal\PetNova.API\obj\Debug\net9.0\ref\PetNova.API.dll

@@ -6,12 +6,12 @@ namespace PetNova.API.Shared.Infrastructure.Persistence.EFC.Configuration.Reposi
 
 public class EfRepository<TEntity, TId> : IRepository<TEntity, TId> where TEntity : class
 {
-    private readonly AppDbContext _context;
+    protected readonly AppDbContext Context;
     private readonly DbSet<TEntity> _dbSet;
 
     public EfRepository(AppDbContext context)
     {
-        _context = context;
+        Context = context;
         _dbSet = context.Set<TEntity>();
     }
 

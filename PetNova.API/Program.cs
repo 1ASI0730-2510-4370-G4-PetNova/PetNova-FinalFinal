@@ -10,10 +10,15 @@ using PetNova.API.Shared.Infrastructure.Persistence.EFC.Configuration;
 using PetNova.API.Shared.Infrastructure.Persistence.EFC.Configuration.Extensions;
 using PetNova.API.Shared.Infrastructure.Persistence.EFC.Configuration.Repositories;
 using PetNova.API.Shared.Infrastructure.Persistence.EFC.Repositories;
-using PetNova.API.Veterinary.ClientAndPetManagement.Application.Services;
-using PetNova.API.Veterinary.Appointments.Application.Services;
+
 using PetNova.API.Veterinary.IAM.Application.Services;
 using PetNova.API.Veterinary.IAM.Domain.Model.Aggregate;
+using PetNova.API.Veterinary.Pets.Application.Internal.CommandServices;
+using PetNova.API.Veterinary.Pets.Application.Internal.QueryServices;
+using PetNova.API.Veterinary.Pets.Domain.Model.Aggregate;
+using PetNova.API.Veterinary.Pets.Domain.Repositories;
+using PetNova.API.Veterinary.Pets.Domain.Services;
+using PetNova.API.Veterinary.Pets.Infrastructure.Repositories;
 using JwtTokenService = PetNova.API.Shared.Infrastructure.Services.JwtTokenService;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -35,16 +40,19 @@ builder.Services.AddCors(options =>
 // ───────────────────────────────────────────────
 
 // Domain services (DI)
-builder.Services.AddScoped<IPetService   , PetService>();
-builder.Services.AddScoped<IClientService, ClientService>();
-builder.Services.AddScoped<IDoctorService, DoctorService>();
+//builder.Services.AddScoped<IPetService   , PetService>();
+builder.Services.AddScoped<IRepository<User, Guid>, EfRepository<User, Guid>>();
+builder.Services.AddScoped<IRepository<Pet, Guid>, EfRepository<Pet, Guid>>();
+builder.Services.AddScoped<IPetRepository, PetRepository>();
+builder.Services.AddScoped<IPetDomainCommandService, PetCommandService>();
+builder.Services.AddScoped<IPetDomainQueryService, PetQueryService>();
+
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddScoped<AuthService>();
-builder.Services.AddScoped<IAppointmentService, AppointmentService>();
 
 
 // Generic repository & UoW
-builder.Services.AddScoped(typeof(IRepository<,>), typeof(EfRepository<,>));
+builder.Services.AddScoped(typeof(IBaseRepository<,>), typeof(EfRepository<,>));
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 // JWT token service (scoped para evitar singleton‑state)
@@ -103,6 +111,13 @@ builder.Services.AddCustomSwagger();
 // 4️⃣  BUILD APP
 // ───────────────────────────────────────────────
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    dbContext.Database.Migrate();
+}
+
 app.UseCors(MyAllowSpecificOrigins);
 
 // Global exception page in Dev

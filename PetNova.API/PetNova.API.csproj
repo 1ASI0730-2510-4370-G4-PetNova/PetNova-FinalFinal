@@ -21,7 +21,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Veterinary\Appointments\Infrastruture\Repositories\" />
         <Folder Include="Veterinary\Appointment\Application\Internal\CommandServices\" />
         <Folder Include="Veterinary\Appointment\Application\Internal\EventHandlers\" />
         <Folder Include="Veterinary\Appointment\Application\Internal\OutboundServices\" />
@@ -37,7 +36,6 @@
         <Folder Include="Veterinary\Appointment\Infrastructure\Persistence\EFC\Repositories\" />
         <Folder Include="Veterinary\Appointment\Interfaces\REST\Resources\" />
         <Folder Include="Veterinary\Appointment\Interfaces\REST\Transform\" />
-        <Folder Include="Veterinary\Client&amp;PetManagement\Infrastruture\Repositories\" />
         <Folder Include="Veterinary\Client\Application\Internal\CommandServices\" />
         <Folder Include="Veterinary\Client\Application\Internal\EventHandlers\" />
         <Folder Include="Veterinary\Client\Application\Internal\OutboundServices\" />
@@ -70,24 +68,6 @@
         <Folder Include="Veterinary\Doctor\Infrastructure\Persistence\EFC\Repositories\" />
         <Folder Include="Veterinary\Doctor\Interfaces\REST\Resources\" />
         <Folder Include="Veterinary\Doctor\Interfaces\REST\Transform\" />
-        <Folder Include="Veterinary\MedicalHistory\Infrastruture\Repositories\" />
-        <Folder Include="Veterinary\MedicalHistory\Interfaces\" />
-        <Folder Include="Veterinary\Pets\Application\Internal\CommandServices\" />
-        <Folder Include="Veterinary\Pets\Application\Internal\EventHandlers\" />
-        <Folder Include="Veterinary\Pets\Application\Internal\OutboundServices\" />
-        <Folder Include="Veterinary\Pets\Application\Internal\QueryServices\" />
-        <Folder Include="Veterinary\Pets\Domain\Model\Aggregate\" />
-        <Folder Include="Veterinary\Pets\Domain\Model\Commands\" />
-        <Folder Include="Veterinary\Pets\Domain\Model\Entities\" />
-        <Folder Include="Veterinary\Pets\Domain\Model\Events\" />
-        <Folder Include="Veterinary\Pets\Domain\Model\Queries\" />
-        <Folder Include="Veterinary\Pets\Domain\Model\ValueObjects\" />
-        <Folder Include="Veterinary\Pets\Domain\Repositories\" />
-        <Folder Include="Veterinary\Pets\Domain\Services\" />
-        <Folder Include="Veterinary\Pets\Infrastructure\Persistence\EFC\Configuration\Extensions\" />
-        <Folder Include="Veterinary\Pets\Infrastructure\Persistence\EFC\Repositories\" />
-        <Folder Include="Veterinary\Pets\Interfaces\REST\Resources\" />
-        <Folder Include="Veterinary\Pets\Interfaces\REST\Transform\" />
     </ItemGroup>
 
 </Project>
