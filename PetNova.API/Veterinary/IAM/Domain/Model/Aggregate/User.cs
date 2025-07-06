@@ -1,4 +1,6 @@
-﻿namespace PetNova.API.Veterinary.IAM.Domain.Model.Aggregate;
+﻿using System;
+
+namespace PetNova.API.Veterinary.IAM.Domain.Model.Aggregate;
 
 public class User
 {
