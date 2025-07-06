@@ -20,38 +20,4 @@
         
     </ItemGroup>
 
-    <ItemGroup>
-        <Folder Include="Veterinary\Appointment\Application\Internal\CommandServices\" />
-        <Folder Include="Veterinary\Appointment\Application\Internal\EventHandlers\" />
-        <Folder Include="Veterinary\Appointment\Application\Internal\OutboundServices\" />
-        <Folder Include="Veterinary\Appointment\Application\Internal\QueryServices\" />
-        <Folder Include="Veterinary\Appointment\Domain\Model\Aggregate\" />
-        <Folder Include="Veterinary\Appointment\Domain\Model\Commands\" />
-        <Folder Include="Veterinary\Appointment\Domain\Model\Entities\" />
-        <Folder Include="Veterinary\Appointment\Domain\Model\Events\" />
-        <Folder Include="Veterinary\Appointment\Domain\Model\Queries\" />
-        <Folder Include="Veterinary\Appointment\Domain\Model\ValueObjects\" />
-        <Folder Include="Veterinary\Appointment\Domain\Repositories\" />
-        <Folder Include="Veterinary\Appointment\Domain\Services\" />
-        <Folder Include="Veterinary\Appointment\Infrastructure\Persistence\EFC\Repositories\" />
-        <Folder Include="Veterinary\Appointment\Interfaces\REST\Resources\" />
-        <Folder Include="Veterinary\Appointment\Interfaces\REST\Transform\" />
-        <Folder Include="Veterinary\Client\Application\Internal\CommandServices\" />
-        <Folder Include="Veterinary\Client\Application\Internal\EventHandlers\" />
-        <Folder Include="Veterinary\Client\Application\Internal\OutboundServices\" />
-        <Folder Include="Veterinary\Client\Application\Internal\QueryServices\" />
-        <Folder Include="Veterinary\Client\Domain\Model\Aggregate\" />
-        <Folder Include="Veterinary\Client\Domain\Model\Commands\" />
-        <Folder Include="Veterinary\Client\Domain\Model\Entities\" />
-        <Folder Include="Veterinary\Client\Domain\Model\Events\" />
-        <Folder Include="Veterinary\Client\Domain\Model\Queries\" />
-        <Folder Include="Veterinary\Client\Domain\Model\ValueObjects\" />
-        <Folder Include="Veterinary\Client\Domain\Repositories\" />
-        <Folder Include="Veterinary\Client\Domain\Services\" />
-        <Folder Include="Veterinary\Client\Infrastructure\Persistence\EFC\Configuration\Extensions\" />
-        <Folder Include="Veterinary\Client\Infrastructure\Persistence\EFC\Repositories\" />
-        <Folder Include="Veterinary\Client\Interfaces\REST\Resources\" />
-        <Folder Include="Veterinary\Client\Interfaces\REST\Transform\" />
-    </ItemGroup>
-
 </Project>

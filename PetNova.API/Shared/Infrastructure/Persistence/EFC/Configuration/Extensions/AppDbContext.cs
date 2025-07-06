@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-
+using PetNova.API.Veterinary.Clients.Domain.Model.Aggregate;
 using PetNova.API.Veterinary.IAM.Domain.Model.Aggregate;
 using PetNova.API.Veterinary.Pets.Domain.Model.Aggregate;
 
@@ -14,6 +14,7 @@ public class AppDbContext : DbContext
  
     public DbSet<Pet> Pets { get; set; }
     public DbSet<User> Users { get; set; }
+    public DbSet<Client> Clients { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -30,7 +31,19 @@ public class AppDbContext : DbContext
             entity.Property(p => p.Gender).IsRequired();
             entity.Property(p => p.ClientId).IsRequired();
         });
-    
+        modelBuilder.Entity<Client>(entity =>
+        {
+            entity.HasKey(c => c.Id);
+            entity.OwnsOne(c => c.Name, name =>
+            {
+                name.Property(n => n.FirstName).HasColumnName("FirstName").IsRequired();
+                name.Property(n => n.LastName).HasColumnName("LastName").IsRequired();
+            });
+
+            entity.Property(c => c.Email).IsRequired();
+            entity.Property(c => c.Phone).IsRequired();
+        });
+
    
     }
 }
