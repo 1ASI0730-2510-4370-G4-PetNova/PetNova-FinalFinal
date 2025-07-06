@@ -17,6 +17,11 @@ public class UnitOfWork : IUnitOfWork
         await _context.SaveChangesAsync();
     }
 
+    public Task SaveChangesAsync()
+    {
+        throw new NotImplementedException();
+    }
+
     public void Dispose()
     {
         _context.Dispose();

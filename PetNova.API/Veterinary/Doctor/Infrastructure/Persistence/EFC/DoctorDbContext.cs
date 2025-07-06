@@ -51,9 +51,6 @@ public class DoctorDbContext(DbContextOptions<DoctorDbContext> options) : DbCont
                 .HasMaxLength(500)
                 .IsRequired(false);
         });
-
-        // Si necesitas configuraciones adicionales:
-        // modelBuilder.ApplyConfigurationsFromAssembly(typeof(DoctorDbContext).Assembly);
     }
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

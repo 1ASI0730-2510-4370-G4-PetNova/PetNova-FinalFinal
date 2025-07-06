@@ -14,6 +14,7 @@ public class AppDbContext : DbContext
  
     public DbSet<Pet> Pets { get; set; }
     public DbSet<User> Users { get; set; }
+    public object Appointments { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
