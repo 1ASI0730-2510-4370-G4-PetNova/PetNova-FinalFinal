@@ -10,7 +10,12 @@ using PetNova.API.Shared.Infrastructure.Persistence.EFC.Configuration;
 using PetNova.API.Shared.Infrastructure.Persistence.EFC.Configuration.Extensions;
 using PetNova.API.Shared.Infrastructure.Persistence.EFC.Configuration.Repositories;
 using PetNova.API.Shared.Infrastructure.Persistence.EFC.Repositories;
-
+using PetNova.API.Veterinary.Doctor.Application.Internal.CommandServices;
+using PetNova.API.Veterinary.Doctor.Application.Internal.QueryServices;
+using PetNova.API.Veterinary.Doctor.Domain.Model.Queries;
+using PetNova.API.Veterinary.Doctor.Domain.Repositories;
+using PetNova.API.Veterinary.Doctor.Infrastructure.Persistence.EFC;
+using PetNova.API.Veterinary.Doctor.Infrastructure.Service;
 using PetNova.API.Veterinary.IAM.Application.Services;
 using PetNova.API.Veterinary.IAM.Domain.Model.Aggregate;
 using PetNova.API.Veterinary.Pets.Application.Internal.CommandServices;
@@ -20,6 +25,7 @@ using PetNova.API.Veterinary.Pets.Domain.Repositories;
 using PetNova.API.Veterinary.Pets.Domain.Services;
 using PetNova.API.Veterinary.Pets.Infrastructure.Repositories;
 using JwtTokenService = PetNova.API.Shared.Infrastructure.Services.JwtTokenService;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -49,6 +55,11 @@ builder.Services.AddScoped<IPetDomainQueryService, PetQueryService>();
 
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddScoped<AuthService>();
+
+// Agregar estas líneas en la sección de registro de servicios
+builder.Services.AddScoped<IProfileCommandService, ProfileCommandService>();
+builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
+builder.Services.AddScoped<IImageStorageService, ImageStorageService>();
 
 
 // Generic repository & UoW
@@ -84,6 +95,25 @@ builder.Services.AddDbContext<AppDbContext>(options =>
         options.LogTo(Console.WriteLine, LogLevel.Information);
 });
 
+// Agregar junto con las demás configuraciones de servicios
+builder.Services.AddDbContext<DoctorDbContext>(options =>
+{
+    options.UseMySql(connStr, ServerVersion.AutoDetect(connStr))
+           .EnableDetailedErrors()
+           .EnableSensitiveDataLogging(builder.Environment.IsDevelopment());
+
+    if (builder.Environment.IsDevelopment())
+        options.LogTo(Console.WriteLine, LogLevel.Information);
+});
+
+// Registrar los servicios necesarios
+builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
+builder.Services.AddScoped<IProfileCommandService, ProfileCommandService>();
+builder.Services.AddScoped<IImageStorageService, ImageStorageService>();
+
+// Agregar junto con los demás servicios
+builder.Services.AddScoped<IProfileQueryService, ProfileQueryService>();
+
 // ───────────────────────────────────────────────
 // 3️⃣  AUTHENTICATION & AUTHORIZATION
 // ───────────────────────────────────────────────
@@ -114,8 +144,9 @@ var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
-    var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    dbContext.Database.Migrate();
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<AppDbContext>();
+    await context.Database.MigrateAsync();
 }
 
 app.UseCors(MyAllowSpecificOrigins);
@@ -145,13 +176,30 @@ using (var scope = app.Services.CreateScope())
     try
     {
         var context = services.GetRequiredService<AppDbContext>();
-        await context.Database.MigrateAsync();          // crea/actualiza
-        await SeedData.InitializeAsync(services);       // datos iniciales
+        var doctorContext = services.GetRequiredService<DoctorDbContext>();
+        
+        await context.Database.MigrateAsync();
+        await doctorContext.Database.MigrateAsync();
+        
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        try
+        {
+            await doctorContext.Database.ExecuteSqlRawAsync("SELECT 1 FROM Profiles LIMIT 1");
+            logger.LogInformation("Tabla 'Profiles' verificada correctamente");
+        }
+        catch
+        {
+            logger.LogWarning("La tabla 'Profiles' no existe, recreando esquema...");
+            await doctorContext.Database.EnsureDeletedAsync();
+            await doctorContext.Database.EnsureCreatedAsync();
+        }
+        
+        await SeedData.InitializeAsync(services);
     }
     catch (Exception ex)
     {
         var logger = services.GetRequiredService<ILogger<Program>>();
-        logger.LogError(ex, "Error while migrating or seeding the database.");
+        logger.LogError(ex, "Error durante la migración o inicialización de la base de datos.");
     }
 }
 
