@@ -10,6 +10,15 @@ using PetNova.API.Shared.Infrastructure.Persistence.EFC.Configuration;
 using PetNova.API.Shared.Infrastructure.Persistence.EFC.Configuration.Extensions;
 using PetNova.API.Shared.Infrastructure.Persistence.EFC.Configuration.Repositories;
 using PetNova.API.Shared.Infrastructure.Persistence.EFC.Repositories;
+using PetNova.API.Veterinary.Appointments.Application.Internal.CommandServices;
+using PetNova.API.Veterinary.Appointments.Application.Internal.QueryServices;
+using PetNova.API.Veterinary.Appointments.Domain.Repositories;
+using PetNova.API.Veterinary.Appointments.Domain.Services;
+using PetNova.API.Veterinary.Appointments.Infrastructure.Repositories;
+using PetNova.API.Veterinary.Client.Application.Internal.Services;
+using PetNova.API.Veterinary.Clients.Domain.Repositories;
+using PetNova.API.Veterinary.Clients.Domain.Services;
+using PetNova.API.Veterinary.Clients.Infrastructure.Repositories;
 using PetNova.API.Veterinary.Doctor.Application.Internal.CommandServices;
 using PetNova.API.Veterinary.Doctor.Application.Internal.QueryServices;
 using PetNova.API.Veterinary.Doctor.Domain.Model.Queries;
@@ -25,13 +34,7 @@ using PetNova.API.Veterinary.Pets.Domain.Repositories;
 using PetNova.API.Veterinary.Pets.Domain.Services;
 using PetNova.API.Veterinary.Pets.Infrastructure.Repositories;
 using JwtTokenService = PetNova.API.Shared.Infrastructure.Services.JwtTokenService;
-using PetNova.API.Veterinary.Appointments.Domain.Repositories;
-using PetNova.API.Veterinary.Appointments.Application.Internal.CommandServices;
-using PetNova.API.Veterinary.Appointments.Application.Internal.QueryServices;
-using PetNova.API.Veterinary.Appointments.Domain.Services;
-using PetNova.API.Veterinary.Appointments.Infrastructure;
-using PetNova.API.Veterinary.Appointments.Interfaces.Rest.Transform;
-using PetNova.API.Veterinary.Appointments.Infrastructure.Repositories;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,13 +42,12 @@ var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: MyAllowSpecificOrigins,
-        policy =>
-        {
-            policy.WithOrigins("http://localhost:5173")
-                .AllowAnyHeader()
-                .AllowAnyMethod();
-        });
+    options.AddPolicy(name: MyAllowSpecificOrigins, policy =>
+    {
+        policy.WithOrigins("http://localhost:5173", "https://petnovaa.netlify.app") // Agrega tu URL de Netlify aquí
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
 });
 
 // ───────────────────────────────────────────────
@@ -74,7 +76,11 @@ builder.Services.AddScoped<IImageStorageService, ImageStorageService>();
 builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
 builder.Services.AddScoped<IAppointmentCommandService, AppointmentCommandService>();
 builder.Services.AddScoped<IAppointmentQueryService, AppointmentQueryService>();
-builder.Services.AddAutoMapper(typeof(AppointmentMapper).Assembly);
+
+// Clients Module
+builder.Services.AddScoped<IClientRepository, ClientRepository>();
+builder.Services.AddScoped<IClientCommandService, ClientCommandService>();
+builder.Services.AddScoped<IClientQueryService, ClientQueryService>();
 
 // Generic repository & UoW
 builder.Services.AddScoped(typeof(IBaseRepository<,>), typeof(EfRepository<,>));
@@ -108,16 +114,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
         options.LogTo(Console.WriteLine, LogLevel.Information);
 });
 
-// Registra AppointmentsDbContext para las citas
-builder.Services.AddDbContext<AppointmentsDbContext>(options =>
-{
-    options.UseMySql(connStr, ServerVersion.AutoDetect(connStr))
-           .EnableDetailedErrors()
-           .EnableSensitiveDataLogging(builder.Environment.IsDevelopment());
 
-    if (builder.Environment.IsDevelopment())
-        options.LogTo(Console.WriteLine, LogLevel.Information);
-});
+
 
 // Registra DoctorDbContext para los datos de los doctores
 builder.Services.AddDbContext<DoctorDbContext>(options =>
@@ -183,11 +181,11 @@ using (var scope = app.Services.CreateScope())
     try
     {
         var context = services.GetRequiredService<AppDbContext>();
-        var appointmentsContext = services.GetRequiredService<AppointmentsDbContext>();
+       // var appointmentsContext = services.GetRequiredService<AppointmentsDbContext>();
         var doctorContext = services.GetRequiredService<DoctorDbContext>();
 
         await context.Database.MigrateAsync();
-        await appointmentsContext.Database.MigrateAsync();
+        //await appointmentsContext.Database.MigrateAsync();
         await doctorContext.Database.MigrateAsync();
 
         var logger = services.GetRequiredService<ILogger<Program>>();

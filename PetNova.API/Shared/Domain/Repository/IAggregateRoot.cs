@@ -25,6 +25,10 @@ public abstract class Entity<TId>
         return Id.Equals(other.Id);
     }
 
+    public interface IAggregateRoot
+    {
+    }
+
     public override int GetHashCode()
     {
         return (GetType().ToString() + Id).GetHashCode();

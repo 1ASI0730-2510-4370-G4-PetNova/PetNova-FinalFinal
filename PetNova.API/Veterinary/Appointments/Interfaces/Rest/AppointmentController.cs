@@ -10,66 +10,49 @@ namespace PetNova.API.Veterinary.Appointments.Interfaces.Rest;
 
 [ApiController]
 [Route("api/appointments")]
-public class AppointmentController : ControllerBase
+public class AppointmentsController : ControllerBase
 {
     private readonly IAppointmentCommandService _commandService;
     private readonly IAppointmentQueryService _queryService;
-    private readonly IMapper _mapper;
 
-    public AppointmentController(
-        IAppointmentCommandService commandService,
-        IAppointmentQueryService queryService,
-        IMapper mapper)
+    public AppointmentsController(IAppointmentCommandService commandService, IAppointmentQueryService queryService)
     {
         _commandService = commandService;
         _queryService = queryService;
-        _mapper = mapper;
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAll([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
+    public async Task<IEnumerable<AppointmentResource>> GetAll()
     {
-        var query = new GetAllAppointmentsQuery { Page = page, PageSize = pageSize };
-        var appointments = await _queryService.HandleAsync(query);
-        return Ok(_mapper.Map<List<AppointmentResource>>(appointments));
+        var result = await _queryService.HandleAsync(new GetAllAppointmentsQuery());
+        return result.Select(AppointmentResourceAssembler.ToResource);
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetById(Guid id)
+    public async Task<ActionResult<AppointmentResource>> GetById(Guid id)
     {
-        var query = new GetAppointmentByIdQuery(id);
-        var appointment = await _queryService.HandleAsync(query);
-        return Ok(_mapper.Map<AppointmentResource>(appointment));
+        var appointment = await _queryService.HandleAsync(new GetAppointmentByIdQuery(id));
+        return AppointmentResourceAssembler.ToResource(appointment);
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] CreateAppointmentResource resource)
+    public async Task<ActionResult<AppointmentResource>> Create(CreateAppointmentCommand command)
     {
-        var command = _mapper.Map<CreateAppointmentCommand>(resource);
         var appointment = await _commandService.HandleAsync(command);
-        return CreatedAtAction(nameof(GetById), new { id = appointment.Id }, _mapper.Map<AppointmentResource>(appointment));
+        return CreatedAtAction(nameof(GetById), new { id = appointment.Id }, AppointmentResourceAssembler.ToResource(appointment));
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(Guid id, [FromBody] UpdateAppointmentResource resource)
+    public async Task<IActionResult> Update(Guid id, UpdateAppointmentCommand command)
     {
-        // Crear el command manualmente para evitar problemas con propiedades init-only
-        var command = new UpdateAppointmentCommand(
-            Id: id,
-            NewStartDate: resource.StartDate,
-            NewStatus: resource.Status != null ? 
-                Enum.Parse<AppointmentStatus>(resource.Status) : null
-        );
-        
-        await _commandService.HandleAsync(command);
+        await _commandService.HandleAsync(command with { Id = id });
         return NoContent();
     }
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(Guid id)
     {
-        var command = new DeleteAppointmentCommand(id);
-        await _commandService.HandleAsync(command);
+        await _commandService.HandleAsync(new DeleteAppointmentCommand(id));
         return NoContent();
     }
 }

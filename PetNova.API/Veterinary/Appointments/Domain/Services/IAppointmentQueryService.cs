@@ -1,5 +1,5 @@
 ﻿using PetNova.API.Veterinary.Appointments.Domain.Model.Queries;
-using PetNova.API.Veterinary.Appointments.Domain.Model.Aggregate;
+using PetNova.API.Veterinary.Appointments.Domain.Model;
 
 namespace PetNova.API.Veterinary.Appointments.Domain.Services;
 

@@ -1,55 +1,27 @@
 ﻿using AutoMapper;
+using PetNova.API.Veterinary.Appointments.Domain.Model;
 using PetNova.API.Veterinary.Appointments.Domain.Model.Queries;
-using PetNova.API.Veterinary.Appointments.Domain.Model.Aggregate;
+using PetNova.API.Veterinary.Appointments.Domain.Model;
 using PetNova.API.Veterinary.Appointments.Domain.Repositories;
 using PetNova.API.Veterinary.Appointments.Domain.Services;
 
 namespace PetNova.API.Veterinary.Appointments.Application.Internal.QueryServices;
 
-internal sealed class AppointmentQueryService : IAppointmentQueryService
+public class AppointmentQueryService : IAppointmentQueryService
 {
     private readonly IAppointmentRepository _repository;
-    private readonly IMapper _mapper;
 
-    public AppointmentQueryService(
-        IAppointmentRepository repository,
-        IMapper mapper)
+    public AppointmentQueryService(IAppointmentRepository repository)
     {
         _repository = repository;
-        _mapper = mapper;
     }
 
-    // Obtener todas las citas (con paginación/filtros)
-    public async Task<IEnumerable<Appointment>> HandleAsync(GetAllAppointmentsQuery query)
-    {
-        return await _repository.GetAllAsync(
-            page: query.Page,
-            pageSize: query.PageSize,
-            sortBy: query.SortBy
-        );
-    }
+    public Task<IEnumerable<Appointment>> HandleAsync(GetAllAppointmentsQuery query)
+        => _repository.GetAllAsync(query.Page, query.PageSize);
 
-    // Obtener cita por ID
-    public async Task<Appointment> HandleAsync(GetAppointmentByIdQuery query)
-    {
-        return await _repository.GetByIdAsync(query.Id) 
-               ?? throw new AppointmentNotFoundException(query.Id);
-    }
+    public Task<Appointment> HandleAsync(GetAppointmentByIdQuery query)
+        => _repository.GetByIdAsync(query.Id) ?? throw new KeyNotFoundException();
 
-    // Obtener citas por estado (y fecha opcional)
-    public async Task<IEnumerable<Appointment>> HandleAsync(GetAppointmentsByStatusQuery query)
-    {
-        return await _repository.GetByStatusAsync(
-            status: query.Status,
-            fromDate: query.FromDate
-        );
-    }
-}
-
-internal class AppointmentNotFoundException : Exception
-{
-    public AppointmentNotFoundException(Guid queryId)
-    {
-        throw new NotImplementedException();
-    }
+    public Task<IEnumerable<Appointment>> HandleAsync(GetAppointmentsByStatusQuery query)
+        => _repository.GetByStatusAsync(query.Status);
 }
