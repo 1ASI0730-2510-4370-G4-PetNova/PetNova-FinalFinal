@@ -44,6 +44,13 @@ public class AuthController : ControllerBase
     [HttpGet("users")]
     public async Task<IActionResult> Users() => Ok(await _auth.ListUsersAsync());
 
+    [Authorize(Roles = "Client")]
+    [HttpGet("client-area")]
+    public IActionResult ClientOnlyArea()
+    {
+        return Ok("Welcome, client!");
+    }
+
     [Authorize]
     [HttpGet("me")]
     public async Task<IActionResult> Me()

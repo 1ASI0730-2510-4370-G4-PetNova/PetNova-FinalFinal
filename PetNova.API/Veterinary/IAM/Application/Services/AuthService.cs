@@ -23,25 +23,32 @@ public class AuthService
 
     public async Task<User?> RegisterAsync(RegisterDTO registerDto)
     {
+        var allowedRoles = new[] { "Admin", "Client", "User" };
+        var requestedRole = registerDto.Role ?? "User";
+
+        if (!allowedRoles.Contains(requestedRole))
+            return null;
+
         var existingUser = (await _userRepository.ListAsync())
             .FirstOrDefault(u => u.Username == registerDto.Username || u.Email == registerDto.Email);
-        
+    
         if (existingUser != null) return null;
 
         var user = new User
         {
             Username = registerDto.Username,
             Email = registerDto.Email,
-            Role = registerDto.Role ?? "User"
+            Role = requestedRole
         };
 
         user.PasswordHash = _passwordHasher.HashPassword(user, registerDto.Password);
-        
+    
         await _userRepository.AddAsync(user);
         await _unitOfWork.CompleteAsync();
-        
+    
         return user;
     }
+
 
     public async Task<User?> AuthenticateAsync(LoginDTO loginDto)
     {
