@@ -23,6 +23,21 @@
     <ItemGroup>
         <Folder Include="Veterinary\Appointments\Infrastruture\Repositories\" />
         <Folder Include="Veterinary\Client&amp;PetManagement\Infrastruture\Repositories\" />
+        <Folder Include="Veterinary\Clients\Application\Internal\CommandServices\" />
+        <Folder Include="Veterinary\Clients\Application\Internal\EventHandlers\" />
+        <Folder Include="Veterinary\Clients\Application\Internal\OutboundServices\" />
+        <Folder Include="Veterinary\Clients\Application\Internal\QueryServices\" />
+        <Folder Include="Veterinary\Clients\Domain\Model\Commands\" />
+        <Folder Include="Veterinary\Clients\Domain\Model\Entities\" />
+        <Folder Include="Veterinary\Clients\Domain\Model\Events\" />
+        <Folder Include="Veterinary\Clients\Domain\Model\Queries\" />
+        <Folder Include="Veterinary\Clients\Domain\Model\ValueObjects\" />
+        <Folder Include="Veterinary\Clients\Domain\Repositories\" />
+        <Folder Include="Veterinary\Clients\Domain\Services\" />
+        <Folder Include="Veterinary\Clients\Infrastructure\Persistence\EFC\Configuration\" />
+        <Folder Include="Veterinary\Clients\Infrastructure\Persistence\EFC\Repositories\" />
+        <Folder Include="Veterinary\Clients\Interfaces\REST\Resources\" />
+        <Folder Include="Veterinary\Clients\Interfaces\REST\Transform\" />
         <Folder Include="Veterinary\MedicalHistory\Infrastruture\Repositories\" />
         <Folder Include="Veterinary\MedicalHistory\Interfaces\" />
         <Folder Include="Veterinary\Status\Infrastruture\" />
