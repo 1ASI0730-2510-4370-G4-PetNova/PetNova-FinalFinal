@@ -52,22 +52,6 @@
         <Folder Include="Veterinary\Client\Infrastructure\Persistence\EFC\Repositories\" />
         <Folder Include="Veterinary\Client\Interfaces\REST\Resources\" />
         <Folder Include="Veterinary\Client\Interfaces\REST\Transform\" />
-        <Folder Include="Veterinary\Doctor\Application\Internal\CommandServices\" />
-        <Folder Include="Veterinary\Doctor\Application\Internal\EventHandlers\" />
-        <Folder Include="Veterinary\Doctor\Application\Internal\OutboundServices\" />
-        <Folder Include="Veterinary\Doctor\Application\Internal\QueryServices\" />
-        <Folder Include="Veterinary\Doctor\Domain\Model\Aggregate\" />
-        <Folder Include="Veterinary\Doctor\Domain\Model\Commands\" />
-        <Folder Include="Veterinary\Doctor\Domain\Model\Entities\" />
-        <Folder Include="Veterinary\Doctor\Domain\Model\Events\" />
-        <Folder Include="Veterinary\Doctor\Domain\Model\Queries\" />
-        <Folder Include="Veterinary\Doctor\Domain\Model\ValueObjects\" />
-        <Folder Include="Veterinary\Doctor\Domain\Repositories\" />
-        <Folder Include="Veterinary\Doctor\Domain\Services\" />
-        <Folder Include="Veterinary\Doctor\Infrastructure\Persistence\EFC\Configuration\Extensions\" />
-        <Folder Include="Veterinary\Doctor\Infrastructure\Persistence\EFC\Repositories\" />
-        <Folder Include="Veterinary\Doctor\Interfaces\REST\Resources\" />
-        <Folder Include="Veterinary\Doctor\Interfaces\REST\Transform\" />
     </ItemGroup>
 
 </Project>
