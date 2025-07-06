@@ -22,6 +22,51 @@ namespace PetNova.API.Migrations
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
 
+            modelBuilder.Entity("PetNova.API.Veterinary.Clients.Domain.Model.Aggregate.Client", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTimeOffset?>("CreatedDate")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("CreatedAt");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<DateTimeOffset?>("UpdatedDate")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("UpdatedAt");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Clients");
+                });
+
+            modelBuilder.Entity("PetNova.API.Veterinary.Doctor.Domain.Model.Aggregate.DoctorProfileAggregate", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("ProfilePictureUrl")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("profiles", (string)null);
+                });
+
             modelBuilder.Entity("PetNova.API.Veterinary.IAM.Domain.Model.Aggregate.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -94,6 +139,110 @@ namespace PetNova.API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Pets");
+                });
+
+            modelBuilder.Entity("PetNova.API.Veterinary.Clients.Domain.Model.Aggregate.Client", b =>
+                {
+                    b.OwnsOne("PetNova.API.Veterinary.Clients.Domain.Model.ValueObjects.FullName", "Name", b1 =>
+                        {
+                            b1.Property<Guid>("ClientId")
+                                .HasColumnType("char(36)");
+
+                            b1.Property<string>("FirstName")
+                                .IsRequired()
+                                .HasMaxLength(50)
+                                .HasColumnType("varchar(50)");
+
+                            b1.Property<string>("LastName")
+                                .IsRequired()
+                                .HasMaxLength(50)
+                                .HasColumnType("varchar(50)");
+
+                            b1.HasKey("ClientId");
+
+                            b1.ToTable("Clients");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ClientId");
+                        });
+
+                    b.Navigation("Name")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("PetNova.API.Veterinary.Doctor.Domain.Model.Aggregate.DoctorProfileAggregate", b =>
+                {
+                    b.OwnsOne("PetNova.API.Veterinary.Doctor.Domain.Model.ValueObjects.Biography", "Biography", b1 =>
+                        {
+                            b1.Property<Guid>("DoctorProfileAggregateId")
+                                .HasColumnType("char(36)");
+
+                            b1.Property<string>("Content")
+                                .IsRequired()
+                                .HasMaxLength(500)
+                                .HasColumnType("varchar(500)")
+                                .HasColumnName("Biography");
+
+                            b1.HasKey("DoctorProfileAggregateId");
+
+                            b1.ToTable("profiles");
+
+                            b1.WithOwner()
+                                .HasForeignKey("DoctorProfileAggregateId");
+                        });
+
+                    b.OwnsOne("PetNova.API.Veterinary.Doctor.Domain.Model.ValueObjects.FullName", "Name", b1 =>
+                        {
+                            b1.Property<Guid>("DoctorProfileAggregateId")
+                                .HasColumnType("char(36)");
+
+                            b1.Property<string>("FirstName")
+                                .IsRequired()
+                                .HasMaxLength(50)
+                                .HasColumnType("varchar(50)")
+                                .HasColumnName("FirstName");
+
+                            b1.Property<string>("LastName")
+                                .IsRequired()
+                                .HasMaxLength(50)
+                                .HasColumnType("varchar(50)")
+                                .HasColumnName("LastName");
+
+                            b1.HasKey("DoctorProfileAggregateId");
+
+                            b1.ToTable("profiles");
+
+                            b1.WithOwner()
+                                .HasForeignKey("DoctorProfileAggregateId");
+                        });
+
+                    b.OwnsOne("PetNova.API.Veterinary.Doctor.Domain.Model.ValueObjects.Specialty", "Specialty", b1 =>
+                        {
+                            b1.Property<Guid>("DoctorProfileAggregateId")
+                                .HasColumnType("char(36)");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .HasColumnType("varchar(100)")
+                                .HasColumnName("Specialty");
+
+                            b1.HasKey("DoctorProfileAggregateId");
+
+                            b1.ToTable("profiles");
+
+                            b1.WithOwner()
+                                .HasForeignKey("DoctorProfileAggregateId");
+                        });
+
+                    b.Navigation("Biography")
+                        .IsRequired();
+
+                    b.Navigation("Name")
+                        .IsRequired();
+
+                    b.Navigation("Specialty")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

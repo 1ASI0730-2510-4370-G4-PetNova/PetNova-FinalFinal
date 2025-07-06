@@ -8,7 +8,7 @@ public class AppointmentsDbContext : DbContext
 {
     public DbSet<Appointment> Appointments { get; set; }
     public DbSet<Pet> Pets { get; set; }
-    public DbSet<Client> Clients { get; set; }
+    public DbSet<Clients.Domain.Model.Aggregate.Client> Clients { get; set; }
 
     public AppointmentsDbContext(DbContextOptions<AppointmentsDbContext> options) 
         : base(options)
@@ -59,7 +59,7 @@ public class AppointmentsDbContext : DbContext
             entity.Property(p => p.Name).IsRequired().HasMaxLength(100);
         });
 
-        modelBuilder.Entity<Client>(entity =>
+        modelBuilder.Entity<Clients.Domain.Model.Aggregate.Client>(entity =>
         {
             entity.HasKey(c => c.Id);
             entity.Property(c => c.Name).IsRequired().HasMaxLength(150);
