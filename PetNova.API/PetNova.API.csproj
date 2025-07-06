@@ -40,7 +40,6 @@
         <Folder Include="Veterinary\Clients\Interfaces\REST\Transform\" />
         <Folder Include="Veterinary\MedicalHistory\Infrastruture\Repositories\" />
         <Folder Include="Veterinary\MedicalHistory\Interfaces\" />
-        <Folder Include="Veterinary\Status\Infrastruture\" />
     </ItemGroup>
 
 </Project>

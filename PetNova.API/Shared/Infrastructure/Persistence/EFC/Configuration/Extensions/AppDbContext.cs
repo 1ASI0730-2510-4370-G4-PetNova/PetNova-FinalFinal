@@ -3,7 +3,6 @@ using PetNova.API.Veterinary.Appointments.Domain.Model.Aggregate;
 using PetNova.API.Veterinary.ClientAndPetManagement.Domain.Model.Aggregate;
 using PetNova.API.Veterinary.IAM.Domain.Model.Aggregate;
 using PetNova.API.Veterinary.MedicalHistory.Domain.Model.Aggregate;
-using PetNova.API.Veterinary.Status.Domain.Model.Aggregate;
 
 namespace PetNova.API.Shared.Infrastructure.Persistence.EFC.Configuration.Extensions;
 
@@ -18,7 +17,6 @@ public class AppDbContext : DbContext
     public DbSet<Doctor> Doctors { get; set; }
     public DbSet<Pet> Pets { get; set; }
     public DbSet<MedicalRecord> MedicalRecords { get; set; }
-    public DbSet<Status> Statuses { get; set; }
     public DbSet<User> Users { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
