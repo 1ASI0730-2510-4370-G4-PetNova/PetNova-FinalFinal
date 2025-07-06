@@ -50,17 +50,35 @@ public class Appointment : Entity<Guid>, IAggregateRoot
         Status = AppointmentStatus.Completed;
     }
 
-    public void Reschedule(DateTime commandNewStartDate)
+    public void Reschedule(DateTime newStartDate)
     {
-        throw new NotImplementedException();
+        if (newStartDate < DateTime.UtcNow.AddHours(24)) // Same rule as creation
+            throw new DomainException("Las citas deben reprogramarse con al menos 24 horas de anticipación.");
+        if (Status == AppointmentStatus.Completed || Status == AppointmentStatus.Cancelled)
+            throw new DomainException($"No se puede reprogramar una cita en estado '{Status}'.");
+
+        StartDate = newStartDate;
+        // Optionally, reset status to Pending if it was Confirmed, etc.
+        // Status = AppointmentStatus.Pending;
+        // Add UpdatedAt = DateTime.UtcNow; if you have that property
     }
 
-    public void ChangeStatus(AppointmentStatus commandNewStatus)
+    public void ChangeStatus(AppointmentStatus newStatus)
     {
-        throw new NotImplementedException();
+        // Add any specific logic for status transitions if needed
+        // For example, cannot change from Completed to Pending, etc.
+        if (Status == AppointmentStatus.Completed && newStatus != AppointmentStatus.Completed)
+             throw new DomainException("No se puede cambiar el estado de una cita ya completada a un estado anterior.");
+        if (Status == AppointmentStatus.Cancelled && newStatus != AppointmentStatus.Cancelled)
+             throw new DomainException("No se puede cambiar el estado de una cita ya cancelada.");
+
+        Status = newStatus;
+        // Add UpdatedAt = DateTime.UtcNow; if you have that property
     }
 }
 
+// Ensure IAggregateRoot is defined if not already in a shared kernel, or remove if not used.
+// For this context, assuming it's a marker interface. If it's from a library, ensure using directive.
 public interface IAggregateRoot
 {
 }

@@ -48,8 +48,8 @@ internal sealed class AppointmentQueryService : IAppointmentQueryService
 
 internal class AppointmentNotFoundException : Exception
 {
-    public AppointmentNotFoundException(Guid queryId)
+    public AppointmentNotFoundException(Guid appointmentId)
+        : base($"Appointment with ID '{appointmentId}' not found.")
     {
-        throw new NotImplementedException();
     }
 }

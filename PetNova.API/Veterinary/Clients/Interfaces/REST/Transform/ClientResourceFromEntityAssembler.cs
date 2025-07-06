@@ -12,6 +12,10 @@ public static class ClientResourceFromEntityAssembler
             entity.Name.FirstName,
             entity.Name.LastName,
             entity.Email,
-            entity.Phone);
+            entity.Phone,
+            entity.Address,    // Added Address
+            entity.CreatedAt,  // Added CreatedAt
+            entity.UpdatedAt   // Added UpdatedAt
+        );
     }
 }

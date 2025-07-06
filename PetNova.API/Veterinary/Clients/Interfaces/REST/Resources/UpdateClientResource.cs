@@ -1,8 +1,12 @@
-﻿namespace PetNova.API.Veterinary.Clients.Interfaces.REST.Resources;
+﻿using System.ComponentModel.DataAnnotations;
 
-public class UpdateClientResource
-{
-    public string? FirstName { get; set; }
-    public string? LastName { get; set; }
-    public string? Phone { get; set; }
-}
+namespace PetNova.API.Veterinary.Clients.Interfaces.REST.Resources;
+
+public record UpdateClientResource(
+    string? FirstName,
+    string? LastName,
+    [EmailAddress] string? Email,
+    string? Phone,
+    string? Address
+    // Password updates should typically be handled via a separate, more secure endpoint
+);

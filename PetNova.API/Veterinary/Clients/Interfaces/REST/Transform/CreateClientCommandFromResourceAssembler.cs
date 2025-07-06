@@ -11,6 +11,9 @@ public static class CreateClientCommandFromResourceAssembler
             resource.FirstName,
             resource.LastName,
             resource.Email,
-            resource.Phone);
+            resource.Phone,
+            resource.Address, // Added Address
+            resource.Password  // Added Password
+        );
     }
 }
