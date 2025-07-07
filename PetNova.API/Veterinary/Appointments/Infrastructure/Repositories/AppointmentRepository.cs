@@ -1,50 +1,42 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PetNova.API.Shared.Infrastructure.Persistence.EFC.Configuration.Extensions;
-using PetNova.API.Veterinary.Appointments.Domain.Model;
-using PetNova.API.Veterinary.Appointments.Domain.Model.ValueObjects;
+using PetNova.API.Veterinary.Appointments.Domain.Model.Aggregates;
 using PetNova.API.Veterinary.Appointments.Domain.Repositories;
-using PetNova.API.Shared.Domain; // Añade esta línea (ajusta el namespace según donde tengas definido Entity<>)
 
-namespace PetNova.API.Veterinary.Appointments.Infrastructure.Repositories;
-
-public class AppointmentRepository : IAppointmentRepository
+namespace PetNova.API.Veterinary.Appointments.Infrastructure.Repositories
 {
-    private readonly AppDbContext _context;
-
-    public AppointmentRepository(AppDbContext context)
+    public class AppointmentRepository : IAppointmentRepository
     {
-        _context = context;
-    }
+        private readonly AppDbContext _context;
 
-    public async Task AddAsync(Appointment appointment)
-    {
-        await _context.Appointments.AddAsync(appointment);
-        await _context.SaveChangesAsync();
-    }
+        public AppointmentRepository(AppDbContext context)
+        {
+            _context = context;
+        }
 
-    public async Task UpdateAsync(Appointment appointment)
-    {
-        _context.Appointments.Update(appointment);
-        await _context.SaveChangesAsync();
-    }
+        public async Task<Appointment?> GetByIdAsync(Guid id)
+        {
+            return await _context.Appointments.FindAsync(id);
+        }
 
-    public async Task DeleteAsync(Guid id)
-    {
-        var appointment = await GetByIdAsync(id);
-        if (appointment != null)
+        public async Task<IEnumerable<Appointment>> GetAllAsync()
+        {
+            return await _context.Appointments.ToListAsync();
+        }
+
+        public async Task AddAsync(Appointment appointment)
+        {
+            await _context.Appointments.AddAsync(appointment);
+        }
+
+        public void Update(Appointment appointment)
+        {
+            _context.Appointments.Update(appointment);
+        }
+
+        public void Remove(Appointment appointment)
         {
             _context.Appointments.Remove(appointment);
-            await _context.SaveChangesAsync();
         }
     }
-
-    public async Task<Appointment?> GetByIdAsync(Guid id)
-        => await _context.Appointments.FindAsync(id);
-
-    public async Task<IEnumerable<Appointment>> GetByStatusAsync(AppointmentStatus status)
-        => _context.Appointments.Where(a => a.Status == status);
-
-    public async Task<IEnumerable<Appointment>> GetAllAsync(int page, int pageSize)
-        => _context.Appointments.Skip((page - 1) * pageSize).Take(pageSize);
 }
-

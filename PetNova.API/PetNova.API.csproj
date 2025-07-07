@@ -23,23 +23,4 @@
         
     </ItemGroup>
 
-    <ItemGroup>
-        <Folder Include="Veterinary\Client\Application\Internal\CommandServices\" />
-        <Folder Include="Veterinary\Client\Application\Internal\EventHandlers\" />
-        <Folder Include="Veterinary\Client\Application\Internal\OutboundServices\" />
-        <Folder Include="Veterinary\Client\Application\Internal\QueryServices\" />
-        <Folder Include="Veterinary\Client\Domain\Model\Aggregate\" />
-        <Folder Include="Veterinary\Client\Domain\Model\Commands\" />
-        <Folder Include="Veterinary\Client\Domain\Model\Entities\" />
-        <Folder Include="Veterinary\Client\Domain\Model\Events\" />
-        <Folder Include="Veterinary\Client\Domain\Model\Queries\" />
-        <Folder Include="Veterinary\Client\Domain\Model\ValueObjects\" />
-        <Folder Include="Veterinary\Client\Domain\Repositories\" />
-        <Folder Include="Veterinary\Client\Domain\Services\" />
-        <Folder Include="Veterinary\Client\Infrastructure\Persistence\EFC\Configuration\Extensions\" />
-        <Folder Include="Veterinary\Client\Infrastructure\Persistence\EFC\Repositories\" />
-        <Folder Include="Veterinary\Client\Interfaces\REST\Resources\" />
-        <Folder Include="Veterinary\Client\Interfaces\REST\Transform\" />
-    </ItemGroup>
-
 </Project>

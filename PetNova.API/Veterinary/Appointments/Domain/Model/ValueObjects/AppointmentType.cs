@@ -2,8 +2,8 @@
 
 public enum AppointmentType
 {
-    GeneralCheckup,
-    Vaccination,
+    Checkup,
     Surgery,
+    Vaccination,
     Emergency
 }

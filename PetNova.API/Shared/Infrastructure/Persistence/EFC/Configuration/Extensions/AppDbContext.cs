@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PetNova.API.Veterinary.Appointments.Domain.Model;
+using PetNova.API.Veterinary.Appointments.Domain.Model.Aggregates;
 using PetNova.API.Veterinary.Clients.Domain.Model.Aggregate;
 using PetNova.API.Veterinary.IAM.Domain.Model.Aggregate;
 using PetNova.API.Veterinary.Pets.Domain.Model.Aggregate;
@@ -11,11 +11,11 @@ public class AppDbContext : DbContext
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
     }
+    public DbSet<Appointment> Appointments { get; set; }
 
  
     public DbSet<Pet> Pets { get; set; }
     public DbSet<User> Users { get; set; }
-    public DbSet<Appointment> Appointments { get; set; }
     public DbSet<Client> Clients { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -49,21 +49,21 @@ public class AppDbContext : DbContext
         {
             entity.HasKey(a => a.Id);
 
+            entity.Property(a => a.PetName).IsRequired().HasMaxLength(100);
+            entity.Property(a => a.ClientName).IsRequired().HasMaxLength(100);
+            entity.Property(a => a.ContactNumber).IsRequired().HasMaxLength(20);
             entity.Property(a => a.StartDate).IsRequired();
-            entity.Property(a => a.Duration).IsRequired();
-            entity.Property(a => a.Status).IsRequired();
-            entity.Property(a => a.Type).IsRequired();
 
-            entity.HasOne<Pet>() // relación con mascota
-                .WithMany()
-                .HasForeignKey(a => a.PetId)
-                .OnDelete(DeleteBehavior.Restrict);
+            entity.Property(a => a.Status)
+                .HasConversion<string>()
+                .IsRequired();
 
-            entity.HasOne<Client>() // relación con cliente
-                .WithMany()
-                .HasForeignKey(a => a.ClientId)
-                .OnDelete(DeleteBehavior.Restrict);
+            entity.Property(a => a.Type)
+                .HasConversion<string>()
+                .IsRequired();
         });
+
+
 
    
     }

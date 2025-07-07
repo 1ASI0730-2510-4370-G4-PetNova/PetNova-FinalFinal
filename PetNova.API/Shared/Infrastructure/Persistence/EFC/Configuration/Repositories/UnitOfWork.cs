@@ -1,4 +1,6 @@
-﻿using PetNova.API.Shared.Domain.Repository;
+﻿using System;
+using System.Threading.Tasks;
+using PetNova.API.Shared.Domain.Repository;
 using PetNova.API.Shared.Infrastructure.Persistence.EFC.Configuration.Extensions;
 
 namespace PetNova.API.Shared.Infrastructure.Persistence.EFC.Repositories;

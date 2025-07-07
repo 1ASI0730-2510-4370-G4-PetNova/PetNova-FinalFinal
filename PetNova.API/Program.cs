@@ -77,6 +77,7 @@ builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
 builder.Services.AddScoped<IAppointmentCommandService, AppointmentCommandService>();
 builder.Services.AddScoped<IAppointmentQueryService, AppointmentQueryService>();
 
+
 // Clients Module
 builder.Services.AddScoped<IClientRepository, ClientRepository>();
 builder.Services.AddScoped<IClientCommandService, ClientCommandService>();
@@ -181,11 +182,9 @@ using (var scope = app.Services.CreateScope())
     try
     {
         var context = services.GetRequiredService<AppDbContext>();
-       // var appointmentsContext = services.GetRequiredService<AppointmentsDbContext>();
         var doctorContext = services.GetRequiredService<DoctorDbContext>();
 
         await context.Database.MigrateAsync();
-        //await appointmentsContext.Database.MigrateAsync();
         await doctorContext.Database.MigrateAsync();
 
         var logger = services.GetRequiredService<ILogger<Program>>();

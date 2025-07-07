@@ -1,14 +1,16 @@
-﻿using PetNova.API.Veterinary.Appointments.Domain.Model;
-using PetNova.API.Veterinary.Appointments.Domain.Model.ValueObjects;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using PetNova.API.Veterinary.Appointments.Domain.Model.Aggregates;
 
 namespace PetNova.API.Veterinary.Appointments.Domain.Repositories;
 
+// Ubicación sugerida: PetNova.API.Veterinary.Appoiments.Domain.Repositories
 public interface IAppointmentRepository
 {
-    Task AddAsync(Appointment appointment);
-    Task UpdateAsync(Appointment appointment);
-    Task DeleteAsync(Guid id);
     Task<Appointment?> GetByIdAsync(Guid id);
-    Task<IEnumerable<Appointment>> GetByStatusAsync(AppointmentStatus status);
-    Task<IEnumerable<Appointment>> GetAllAsync(int page, int pageSize);
+    Task<IEnumerable<Appointment>> GetAllAsync();
+    Task AddAsync(Appointment appointment);
+    void Update(Appointment appointment);
+    void Remove(Appointment appointment);
 }

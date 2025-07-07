@@ -1,5 +1,7 @@
-﻿using MediatR;
+﻿namespace PetNova.API.Veterinary.Appointments.Domain.Model.Commands;
 
-namespace PetNova.API.Veterinary.Appointments.Domain.Model.Commands;
-
-public record DeleteAppointmentCommand(Guid Id);
+/// <summary>
+/// Command to delete an appointment.
+/// </summary>
+/// <param name="AppointmentId">ID of the appointment to delete.</param>
+public record DeleteAppointmentCommand(Guid AppointmentId);

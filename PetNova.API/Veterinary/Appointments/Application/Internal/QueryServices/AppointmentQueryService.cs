@@ -1,7 +1,7 @@
-﻿using AutoMapper;
-using PetNova.API.Veterinary.Appointments.Domain.Model;
-using PetNova.API.Veterinary.Appointments.Domain.Model.Queries;
-using PetNova.API.Veterinary.Appointments.Domain.Model;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using PetNova.API.Veterinary.Appointments.Domain.Model.Aggregates;
+using PetNova.API.Veterinary.Appointments.Domain.Model.Query;
 using PetNova.API.Veterinary.Appointments.Domain.Repositories;
 using PetNova.API.Veterinary.Appointments.Domain.Services;
 
@@ -16,12 +16,12 @@ public class AppointmentQueryService : IAppointmentQueryService
         _repository = repository;
     }
 
-    public Task<IEnumerable<Appointment>> HandleAsync(GetAllAppointmentsQuery query)
-        => _repository.GetAllAsync(query.Page, query.PageSize);
-
-    public Task<Appointment> HandleAsync(GetAppointmentByIdQuery query)
-        => _repository.GetByIdAsync(query.Id) ?? throw new KeyNotFoundException();
-
-    public Task<IEnumerable<Appointment>> HandleAsync(GetAppointmentsByStatusQuery query)
-        => _repository.GetByStatusAsync(query.Status);
+    public async Task<IEnumerable<Appointment>> HandleAsync(GetAllAppointmentsQuery query)
+    {
+        return await _repository.GetAllAsync();
+    }
+    public async Task<Appointment?> HandleAsync(GetAppointmentByIdQuery query)
+    {
+        return await _repository.GetByIdAsync(query.AppointmentId);
+    }
 }

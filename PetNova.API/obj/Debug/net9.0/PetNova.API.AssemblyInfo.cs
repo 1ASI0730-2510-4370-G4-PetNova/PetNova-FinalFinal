@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PetNova.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cfd0b2c79245770f36706c36e1a94ed77db06183")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f97a27870c3d41ce0a34d1a86f7c6d5fc4b0392c")]
 [assembly: System.Reflection.AssemblyProductAttribute("PetNova.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PetNova.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

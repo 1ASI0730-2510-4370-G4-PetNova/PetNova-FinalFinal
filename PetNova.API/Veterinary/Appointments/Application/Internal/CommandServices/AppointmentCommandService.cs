@@ -1,43 +1,77 @@
-﻿using PetNova.API.Shared.Domain.Repository;
-using PetNova.API.Veterinary.Appointments.Application.Internal.QueryServices;
-using PetNova.API.Veterinary.Appointments.Domain.Model;
-using PetNova.API.Veterinary.Appointments.Domain.Model.Commands;
+﻿using System;
+using System.Threading.Tasks;
+using PetNova.API.Shared.Domain.Repository;
 using PetNova.API.Veterinary.Appointments.Domain.Repositories;
+using PetNova.API.Veterinary.Appointments.Domain.Model.Aggregates;
+using PetNova.API.Veterinary.Appointments.Domain.Model.Commands;
 using PetNova.API.Veterinary.Appointments.Domain.Services;
 
 namespace PetNova.API.Veterinary.Appointments.Application.Internal.CommandServices;
 
-public class AppointmentCommandService : IAppointmentCommandService
+public class AppointmentCommandService(
+    IAppointmentRepository appointmentRepository,
+    IUnitOfWork unitOfWork
+) : IAppointmentCommandService
 {
-    private readonly IAppointmentRepository _repository;
-
-    public AppointmentCommandService(IAppointmentRepository repository)
+    public async Task<Appointment?> Handle(CreateAppointmentCommand command)
     {
-        _repository = repository;
-    }
+        var appointment = new Appointment(command);
+        try
+        {
+            await appointmentRepository.AddAsync(appointment);
+            await unitOfWork.CompleteAsync();
+        }
+        catch
+        {
+            return null;
+        }
 
-    public async Task<Appointment> HandleAsync(CreateAppointmentCommand command)
-    {
-        var appointment = Appointment.Create(command.PetId, command.ClientId, command.StartDate, command.Duration, command.Type);
-        await _repository.AddAsync(appointment);
         return appointment;
     }
 
-    public async Task HandleAsync(UpdateAppointmentCommand command)
+    public async Task<Appointment?> Handle(Guid id, CreateAppointmentCommand command)
     {
-        var appointment = await _repository.GetByIdAsync(command.Id) ?? throw new KeyNotFoundException();
+        var appointment = await appointmentRepository.GetByIdAsync(id);
+        if (appointment is null) return null;
 
-        if (command.NewStartDate.HasValue)
-            appointment.Reschedule(command.NewStartDate.Value);
+        appointment.Update(
+            command.PetName,
+            command.ClientId,
+            command.ClientName,
+            command.ContactNumber,
+            command.StartDate,
+            command.Status,
+            command.Type
+        );
 
-        if (command.NewStatus.HasValue)
-            appointment.ChangeStatus(command.NewStatus.Value); 
+        try
+        {
+            appointmentRepository.Update(appointment);
+            await unitOfWork.CompleteAsync();
+        }
+        catch
+        {
+            return null;
+        }
 
-        await _repository.UpdateAsync(appointment);
+        return appointment;
     }
 
-    public async Task HandleAsync(DeleteAppointmentCommand command)
+    public async Task<bool> Handle(DeleteAppointmentCommand command)
     {
-        await _repository.DeleteAsync(command.Id);
+        var appointment = await appointmentRepository.GetByIdAsync(command.AppointmentId);
+        if (appointment is null) return false;
+
+        try
+        {
+            appointmentRepository.Remove(appointment);
+            await unitOfWork.CompleteAsync();
+        }
+        catch
+        {
+            return false;
+        }
+
+        return true;
     }
 }
